@@ -50,9 +50,9 @@ The goals / steps of this project are the following:
 The code for this step is contained in the cell number 2 to 6 of the IPython notebook located in "./examples/project2.ipynb" 
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
-I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
+I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: <br/>
 ![alt text][detect_corners] <br/>
-![alt text][undistorted_chess]
+![alt text][undistorted_chess]<br/>
 
 
 ### Pipeline (single images)
@@ -60,8 +60,8 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 #### 1. Distortion correction
 
 To demonstrate this step, the distortion correction steps explained as above.
-Below is one of the distortion corrected test image.
-![alt text][undistorted_video_image]
+Below is one of the distortion corrected test image.<br/>
+![alt text][undistorted_video_image]<br/>
 
 #### 2. Perspective transform
 
@@ -90,12 +90,12 @@ Following the distortion correction, an undistorted image undergoes Perspective 
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
-The below image shows perpective transform for straight lines,
+The below image shows perpective transform for straight lines,<br/>
 
 ![alt text][staright_perpective_transform] <br/>
 
-The below image shows perpective transform for curved lines,
-![alt text][curved_perpective_transform]
+The below image shows perpective transform for curved lines,<br/>
+![alt text][curved_perpective_transform]<br/>
 
 #### 3. Color transforms, gradients or other methods to create a thresholded binary image
 
@@ -104,18 +104,18 @@ I used a combination of color and gradient thresholds to generate a binary image
 Using OpenCV, we can pull out the individual channels from each color space, and see if it better isolates the laneline pixels
 Clearly some of these channels perform better than others. The channels I selected are R channel of RGB, S channel of HLS, B-channel of LAB, L-channel of LUV. Then thresholding applied to each channel image using functions rgb_rthresh, hls_sthresh, lab_bthresh and luv_lthresh.
 
-The below image shows all these channel layers of a warped image.
+The below image shows all these channel layers of a warped image.<br/>
 ![alt text][selected_layers]<br/>
 
 Sobel derivatives calulated using calc_sobel function.
 
 Finally all the 4 channel layers and sobel layer combined to get the final thresholded binary image.
 
-Below image shows each of the four thresholded channel layers and the sobel output layer.
+Below image shows each of the four thresholded channel layers and the sobel output layer.<br/>
 ![alt text][color_channels]<br/>
 
-Combined thresholded binary image.
-![alt text][final_binary_image]
+Combined thresholded binary image.<br/>
+![alt text][final_binary_image]<br/>
 
 #### 4. Lane Line detection: Sliding Window technique
 We now have a warped, thresholded binary image where the pixels are either 0 or 1; 0 (black color) constitutes the unfiltered pixels and 1 (white color) represents the filtered pixels. The next step involves mapping out the lane lines and determining explicitly which pixels are part of the lines and which belong to the left line and which belong to the right line.
@@ -138,9 +138,9 @@ The parameters used for the sliding window search are:
 ```
 The left and right lines have been identified and fit with a curved polynomial(2nd order) function.
 
-The output of sliding window as below,
+The output of sliding window as below,<br/>
 
-![alt text][sliding_window]
+![alt text][sliding_window]<br/>
 
 #### 5. Lane Line detection: Adaptive Search
 
@@ -155,34 +155,34 @@ Hence, a custom Adaptive Search technique was implemented to operate once a fram
 * Following this iterative thresholding process, the returned binary windows are stacked together to get a single large binary image with dimensions same as that of the input image
 The code implemented in cells 25 and 26 of project2.ipynb
 
-![alt text][adaptive_search]
+![alt text][adaptive_search]<br/>
 
 #### 6. Radius of curvature of the lane and the position of the vehicle with respect to center.
 
-Following this conversion, we can now compute the radius of curvature (see tutorial here) at any point x on the lane line represented by the function x = f(y) as follows:
-![alt text][r-curve]
+Following this conversion, we can now compute the radius of curvature (see tutorial here) at any point x on the lane line represented by the function x = f(y) as follows:<br/>
+![alt text][r-curve]<br/>
 
-In the case of the second order polynomial above, the first and second derivatives are:
-![alt text][derivative]
+In the case of the second order polynomial above, the first and second derivatives are:<br/>
+![alt text][derivative]<br/>
 
-So, our equation for radius of curvature becomes:
-![alt text][final_rcurve]
+So, our equation for radius of curvature becomes:<br/>
+![alt text][final_rcurve]<br/>
 
 The code for steps implemented in cells 28 to 30 in project2.ipynb
 
 #### 6. An example of result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines #31 through #32 in my code in `project2.ipynb` in the function `final_pipeline()`.  Here is an example of my result on a test image:
+I implemented this step in lines #31 through #32 in my code in `project2.ipynb` in the function `final_pipeline()`.  Here is an example of my result on a test image:<br/>
 
-![alt text][test_output_image]
+![alt text][test_output_image]<br/>
 
 ---
 
 ### Pipeline (video)
 
-#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).<br/>
 
-Here's a [https://www.youtube.com/watch?v=7FStCCtXx9E](./project_video.mp4)
+Here's a [https://www.youtube.com/watch?v=7FStCCtXx9E](./project_video.mp4)<br/>
 
 ---
 
