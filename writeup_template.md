@@ -51,7 +51,11 @@ The code for this step is contained in the cell number 2 to 6 of the IPython not
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: <br/>
+
+The detected corners of chess images as below<br/>
 ![alt text][detect_corners] <br/>
+
+The undistorted chess image.<br/>
 ![alt text][undistorted_chess]<br/>
 
 
@@ -180,9 +184,9 @@ I implemented this step in lines #31 through #32 in my code in `project2.ipynb` 
 
 ### Pipeline (video)
 
-#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).<br/>
+#### 1.The link to my final video output as below. <br/>
 
-Here's a [https://www.youtube.com/watch?v=7FStCCtXx9E](./project_video.mp4)<br/>
+[https://www.youtube.com/watch?v=7FStCCtXx9E]
 
 ---
 
